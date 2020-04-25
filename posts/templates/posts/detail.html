@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block link %}
+    <link rel="stylesheet" href="{% static 'css/detail.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+{% endblock %}
+
+{% block content %}
+
+<div class="card">
+
+
+    <div class="card-content">
+        <h1>{{ post.title }}</h1>
+        <small>{{ post.auhtor }}</small>
+        <hr/>
+        <div id="content-main">
+        <p>{{ post.body }}</p>
+        </div>
+        <hr/>
+    </div>
+    {{ comments.count }}
+    {% for comment in comments %}
+        <div class="card-comment">
+            <p>{{ comment.username }}. <small>{{ comment.text }}</small></p>
+
+        </div>
+    {% endfor %}
+    <hr/>
+{% if request.user.is_authenticated %}
+    <form method='POST'>
+        {% csrf_token %}
+        {{ comment_form|crispy }}
+        <input type="submit" value="Add" class="btn btn-outline-dark">
+    </form>
+
+{% endif %}
+</div>
+{% endblock %}
+

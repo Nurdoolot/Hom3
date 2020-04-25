@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block link %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+{% endblock %}
+{% block content %}
+<form method="post">{% csrf_token %}
+<div class="card text-center card border-primary">
+  <div class="card-body">
+      <h3 class="card-title">Delete</h3>
+      <p class="card-text"><h5 class="card-title" >Are you sure you want to delete "{{ posts }}" ?</h5></p>
+      <input class="btn btn-outline-dark" type="submit" value="Delete" />
+  </div>
+</div>
+</form>
+{% endblock %}

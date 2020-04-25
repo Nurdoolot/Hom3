@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block link %}
+    <link rel="stylesheet" href="{% static 'css/post.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+{% endblock %}
+{% block content %}
+
+<div class="container">
+    {% for post in posts %}
+ <a href="{% url 'detail' post.id %}"><div class="column">
+    <div class="demo-title"></div>
+    <div class="post-module">
+      <div class="thumbnail">
+        <img src="{{ post.image.url }}"/>
+      </div>
+      <div class="post-content">
+        <div class="category">{{ post.author }}</div>
+        <h1 class="title">{{ post.title }}</h1>
+        <h2 class="sub_title">{{ post.body|truncatechars:40 }}</h2>
+      {% if request.user.is_authenticated %}
+        <form action="{% url 'like'%}" method="POST">
+            {% csrf_token %}
+                <input type="hidden" name="post_id" value="{{ post.id }}">
+            {% if user not in post.liked.all %}
+                <button type="submit" class="btn btn-outline-danger">Like</button>
+            {% else %}
+                <button type="submit" class="btn btn-outline-dark">unlike</button>
+            {% endif %}
+        </form>
+        {% endif %}
+          <div class="post-meta"><span class="timestamp"><i class="fa fa-clock-"></i>{{ post.created }}</span>
+              <span class="comments"><i class="fa fa-comments"></i>{{ post.comment_set.count }} comments</span>
+              <span class="comments"><i class="fas fa-heart"></i>{{ post.liked.count }} likes</span>
+          </div>
+      </div>
+    </div>
+  </div></a>
+  {% endfor %}
+</div>
+{% endblock %}
+

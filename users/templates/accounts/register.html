@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{% static 'css/sign.css' %}">
+</head>
+<body>
+
+<div class="form">
+  <div class="thumbnail"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/169963/hat.svg"/></div>
+  <form class="register-form" method="POST">
+      {% csrf_token %}
+      {{ form.username.label }}
+    {{ form.username }}
+      {{ form.email.label }}
+    {{ form.email }}
+      {{ form.password1.label }}
+    {{ form.password1 }}
+      {{ form.password2.label }}
+    {{ form.password2 }}
+    <button type="submit">create</button>
+    <p class="message">Already registered? <a href="{% url 'login' %}">Sign In</a></p>
+  </form>
+</div>
+</body>
+</html>
