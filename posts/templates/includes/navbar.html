@@ -19,6 +19,7 @@
         <a href="{% url 'login' %}" class="item -link">Log in</a>
         <a href="{% url 'register' %}" class="item -link">Sign up</a>
             {% else %}
+        <a href="{% url 'profile' %}" class="item -link">Profile</a>
         <a href="{% url 'logout' %}" class="item -link">Logout</a>
             {% endif %}
           <span class="item"><i class="fa fa-search"></i></span>

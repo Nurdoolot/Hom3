@@ -1,6 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-from .forms import CreateUserForm
+from .forms import CreateUserForm, ProfileForm
 from .decorators import unauthenticated_user
 
 
@@ -34,3 +35,14 @@ def login_page(request):
 def logout_user(request):
     logout(request)
     return redirect('post')
+
+@login_required(login_url='login')
+def profile(request):
+    profile = request.user.profile
+    form = ProfileForm(instance=profile)
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+    context = {'form': form}
+    return render(request, 'accounts/profile.html', context)
